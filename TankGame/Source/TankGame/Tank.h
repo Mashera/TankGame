@@ -10,6 +10,7 @@
 //Forward declarations
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 
 UCLASS()
@@ -33,6 +34,7 @@ public:
 protected:
 	//Tank movement component pointer
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -48,4 +50,14 @@ private:
 
 	UPROPERTY(EditAnywhere,Category = Firing)
 	float LaunchSpeed = 100000; // 1000m /s
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	// Local barrel reference for spawning projectile
+	UTankBarrel* Barrel = nullptr;
+
+	float ReloadTimeInSeconds = 3.f;
+	
+	float LastFireTime = 0;
 };
