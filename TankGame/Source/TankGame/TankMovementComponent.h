@@ -18,7 +18,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendMoveForward(float Throw); //Throw - how far forward or backwards the  control is moved
 	UFUNCTION(BlueprintCallable, Category = Input)
-		void IntendTurnRight(float Throw);
+	void IntendTurnRight(float RightThrow);
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
