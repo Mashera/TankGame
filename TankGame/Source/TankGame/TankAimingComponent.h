@@ -48,7 +48,11 @@ private:
 	UTankAimingComponent();
 
 	void MoveBarrelTowards(FVector AimDirection);
+	
+	virtual void BeginPlay() override;
 
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
