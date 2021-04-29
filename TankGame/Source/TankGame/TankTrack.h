@@ -22,4 +22,8 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float TrackMaxDrivingForce =  600000; //A 60 ton tank, 1G of acceleration.
 	
+private:
+	UTankTrack();
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 };
