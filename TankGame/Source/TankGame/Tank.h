@@ -11,7 +11,6 @@
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
-class UTankMovementComponent;
 
 
 UCLASS()
@@ -20,51 +19,35 @@ class TANKGAME_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
-
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
-protected:
-	//Tank movement component pointer
-	UTankAimingComponent* TankAimingComponent = nullptr;
+	UTankBarrel* Barrel = nullptr;
 
+protected:
+
+	//Tank movement component pointer
 	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
+	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
 	// Sets default values for this pawn's properties
 	ATank();
 
-
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	//Remove once Fire is moved to aimingcomponent
 	UPROPERTY(EditDefaultsOnly,Category = Firing)
 	float LaunchSpeed = 100000; // 1000m /s
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-		float ReloadTimeInSeconds = 3.f;
-
-
-	// Local barrel reference for spawning projectile
-	UTankBarrel* Barrel = nullptr;
-
+	float ReloadTimeInSeconds = 3.f;
 	
+
 	float LastFireTime = 0;
 };

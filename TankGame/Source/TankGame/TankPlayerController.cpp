@@ -8,16 +8,15 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank)
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tank not possessed"))
+		FoundAimingComponent(AimingComponent);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tank %s possessed"), *(ControlledTank->GetName()))
+		UE_LOG(LogTemp, Warning, TEXT("Can't find aiming component at begin play"));
 	}
-	UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin Play"));
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -29,7 +28,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	FVector HitLocation; //OutParameter
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 	if (GetSightRayHitLocation(HitLocation))  // has side-effect, is going to line-trace
 	{ 
 		GetControlledTank()->AimAt(HitLocation);
