@@ -13,7 +13,8 @@ enum class EFiringStatus : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 //Forward Declaration
@@ -29,13 +30,18 @@ class TANKGAME_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
+
+	EFiringStatus GetFiringState() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetRoundsLeft() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -72,4 +78,6 @@ private:
 	FVector AimDirection;
 
 	float LastFireTime = 0;
+
+	int RoundsLeft = 5;
 };
